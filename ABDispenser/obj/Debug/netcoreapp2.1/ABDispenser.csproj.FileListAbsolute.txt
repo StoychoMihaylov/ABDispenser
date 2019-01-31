@@ -1,0 +1,11 @@
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\bin\Debug\netcoreapp2.1\ABDispenser.deps.json
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\bin\Debug\netcoreapp2.1\ABDispenser.runtimeconfig.json
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\bin\Debug\netcoreapp2.1\ABDispenser.runtimeconfig.dev.json
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\bin\Debug\netcoreapp2.1\ABDispenser.dll
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\bin\Debug\netcoreapp2.1\ABDispenser.pdb
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.csprojAssemblyReference.cache
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.csproj.CoreCompileInputs.cache
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.AssemblyInfoInputs.cache
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.AssemblyInfo.cs
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.dll
+C:\Users\stmih\source\repos\ABDispenser\ABDispenser\obj\Debug\netcoreapp2.1\ABDispenser.pdb
