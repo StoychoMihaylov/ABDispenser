@@ -104,7 +104,6 @@
                         Thread.Sleep(100);
                     }
 
-                    // TO DO: working with files
                     string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                     DirectoryInfo directory = new DirectoryInfo(assemblyFolder);
                     FileInfo[] fileArray = directory.GetFiles("*.pdf");
@@ -139,8 +138,6 @@
                             currentStep++;
                         }
                     }
-                    
-                    
                 } 
             } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar);
 
