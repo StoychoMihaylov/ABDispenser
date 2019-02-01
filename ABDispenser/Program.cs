@@ -11,27 +11,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("------------------------------------------------------------");
-            Console.WriteLine("                                             .d8b.          ");
-            Console.WriteLine("       .d8888.              d8b    d8b      88 R 88         ");
-            Thread.Sleep(700);
-            Console.WriteLine("       88'  YP              888b  d888       'q8p'          ");
-            Thread.Sleep(500);
-            Console.WriteLine("       '8bo.   d88888888b   88'8bd8'88                      ");
-            Thread.Sleep(300);
-            Console.WriteLine("         'Y8b.    '88'      88  88  88                      ");
-            Thread.Sleep(200);
-            Console.WriteLine("       db   8D     88       88      88                      ");
-            Thread.Sleep(10);
-            Console.WriteLine("       '8888Y'     88  @    88      88  @                   ");
-            Console.WriteLine("");
-            Console.WriteLine("-------------------------------------------------------------");
-            Console.WriteLine("1.To add person write 'add' followed by 'name' of the person.");
-            Console.WriteLine("2.To remove person write 'remove' followed by the chosen 'name'.");
-            Console.WriteLine("3.Use 'participants' to se all added persons.");
-            Console.WriteLine("4.Use 'start' to start dispensing or click 'Spacebar' to stop it.");
-            Console.WriteLine("5.Use '?' to see all the commands.");
-            Console.WriteLine("-------------------------------------------------------------");
+            PrintInitials();
 
             var persons = new List<string>();
 
@@ -100,7 +80,7 @@
                 }
                 else if (input[0] == commands[2])
                 {
-                    // TO DO: start program
+                    // Start 
                     var result = DispenseAB(persons);
                     Console.WriteLine();
                     Console.WriteLine(result);
@@ -165,6 +145,31 @@
             } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar);
 
             return "The ABDispenser is stopped!";
+        }
+
+        private static void PrintInitials()
+        {
+            Console.WriteLine("------------------------------------------------------------");
+            Console.WriteLine("                                             .d8b.          ");
+            Console.WriteLine("       .d8888.              d8b    d8b      88 R 88         ");
+            Thread.Sleep(700);
+            Console.WriteLine("       88'  YP              888b  d888       'q8p'          ");
+            Thread.Sleep(500);
+            Console.WriteLine("       '8bo.   d88888888b   88'8bd8'88                      ");
+            Thread.Sleep(300);
+            Console.WriteLine("         'Y8b.    '88'      88  88  88                      ");
+            Thread.Sleep(200);
+            Console.WriteLine("       db   8D     88       88      88                      ");
+            Thread.Sleep(10);
+            Console.WriteLine("       '8888Y'     88  @    88      88  @                   ");
+            Console.WriteLine("");
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("1.To add person write 'add' followed by 'name' of the person.");
+            Console.WriteLine("2.To remove person write 'remove' followed by the chosen 'name'.");
+            Console.WriteLine("3.Use 'participants' to se all added persons.");
+            Console.WriteLine("4.Use 'start' to start dispensing or click 'Spacebar' to stop it.");
+            Console.WriteLine("5.Use '?' to see all the commands.");
+            Console.WriteLine("-------------------------------------------------------------");
         }
     }
 }
