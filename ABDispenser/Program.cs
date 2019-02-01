@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
     using System.Threading;
 
     class Program
@@ -98,16 +101,19 @@
                 else if (input[0] == commands[2])
                 {
                     // TO DO: start program
-                    var result = DispenseAB();
+                    var result = DispenseAB(persons);
                     Console.WriteLine();
                     Console.WriteLine(result);
                 }
             }
         }
 
-        private static string DispenseAB()
+        private static string DispenseAB(List<string> persons)
         {
             string[] simbs = new string[] { "-", "\\", "|", "/"};
+            var stepLength = persons.Count;
+            var currentStep = 0;
+
             do
             {
                 while (!Console.KeyAvailable)
@@ -119,6 +125,42 @@
                     }
 
                     // TO DO: working with files
+                    string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    DirectoryInfo directory = new DirectoryInfo(assemblyFolder);
+                    FileInfo[] fileArray = directory.GetFiles("*.pdf");
+
+                    foreach (FileInfo file in fileArray)
+                    {
+                        var filename = file.Name.ToLower();
+
+                        var isMatch = persons.Any(pr => filename.Contains(pr.ToLower()));
+                        if (isMatch)
+                        {
+                            continue;
+                        }
+
+                        if (!filename.Contains("rechnung") 
+                            && !filename.Contains("warten") 
+                            && !filename.Contains("lieferschein") 
+                            && !filename.Contains("offen"))
+                        {
+                            
+                            if (stepLength == 0)
+                            {
+                                return "Error: Please add persons!";
+                            }
+                            else if (currentStep == stepLength)
+                            {
+                                currentStep = 0;
+                            }
+
+                            var newName = file.Name.Insert(0, persons[currentStep] + "_");
+                            File.Move(file.Name, newName);
+                            currentStep++;
+                        }
+                    }
+                    
+                    
                 } 
             } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar);
 
