@@ -9,6 +9,8 @@
 
     class Program
     {
+        public static int stepCounter = 0;
+
         static void Main(string[] args)
         {
             PrintInitials();
@@ -46,8 +48,10 @@
                     {
                         persons.Add(input[1]);
                         Console.WriteLine($"The name '{input[1]}' is added!");
+
+                        // Set step counter to start from the new added person.
+                        stepCounter = persons.Count() -1;
                     }
-                    
                 }
                 else if(input[0] == commands[1])
                 {
@@ -92,7 +96,6 @@
         {
             string[] simbs = new string[] { "-", "\\", "|", "/"};
             var stepLength = persons.Count;
-            var currentStep = 0;
 
             do
             {
@@ -128,14 +131,14 @@
                             {
                                 return "Error: Please add persons!";
                             }
-                            else if (currentStep == stepLength)
+                            else if (stepCounter == stepLength)
                             {
-                                currentStep = 0;
+                                stepCounter = 0;
                             }
 
-                            var newName = file.Name.Insert(0, persons[currentStep] + "_");
+                            var newName = file.Name.Insert(0, persons[stepCounter] + "_");
                             File.Move(file.Name, newName);
-                            currentStep++;
+                            stepCounter++;
                         }
                     }
                 } 
