@@ -16,6 +16,7 @@
             PrintInitials();
 
             var persons = new List<string>();
+            var removedPersons = new List<string>();
 
             string[] commands = new string[]
             {
@@ -57,7 +58,9 @@
                 {
                     if (persons.Contains(input[1]))
                     {
-                        persons.Remove(input[1]);
+                        var removedPerson = input[1];
+                        removedPersons.Add(removedPerson);
+                        persons.Remove(removedPerson);
                         Console.WriteLine($"'{input[1]}' removed!");
 
                         // set step counter -1, safely avoiding overflowing the array of persons
@@ -91,14 +94,14 @@
                 else if (input[0] == commands[2])
                 {
                     // Start 
-                    var result = DispenseAB(persons);
+                    var result = DispenseAB(persons, removedPersons);
                     Console.WriteLine();
                     Console.WriteLine(result);
                 }
             }
         }
 
-        private static string DispenseAB(List<string> persons)
+        private static string DispenseAB(List<string> persons, List<string> removedPersons)
         {
             string[] simbs = new string[] { "-", "\\", "|", "/"};
             var stepLength = persons.Count;
@@ -121,8 +124,11 @@
                     {
                         var filename = file.Name.ToLower();
 
-                        var isMatch = persons.Any(pr => filename.Contains(pr.ToLower()));
-                        if (isMatch)
+                        var isMatchanyPerosn = persons.Any(pr => filename.Contains(pr.ToLower()));
+                        var isMatchAnyRemovedPerson = removedPersons.Any(pr => filename.Contains(pr.ToLower()));
+
+                        // If one of both matchs it will miss working with this file(continue with next one)
+                        if (isMatchanyPerosn || isMatchAnyRemovedPerson)
                         {
                             continue;
                         }
