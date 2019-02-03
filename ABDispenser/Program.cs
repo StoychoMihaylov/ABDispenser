@@ -59,6 +59,12 @@
                     {
                         persons.Remove(input[1]);
                         Console.WriteLine($"'{input[1]}' removed!");
+
+                        // set step counter -1, safely avoiding overflowing the array of persons
+                        while (stepCounter >= persons.Count())
+                        {
+                            stepCounter--;
+                        }
                     }
                     else
                     {
