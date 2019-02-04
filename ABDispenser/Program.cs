@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using System.Threading;
 
     class Program
@@ -16,6 +17,7 @@
             PrintInitials();
 
             var persons = new List<string>();
+            var removedPersons = new List<string>();
 
             string[] commands = new string[]
             {
@@ -57,7 +59,9 @@
                 {
                     if (persons.Contains(input[1]))
                     {
-                        persons.Remove(input[1]);
+                        var removedPerson = input[1];
+                        removedPersons.Add(removedPerson);
+                        persons.Remove(removedPerson);
                         Console.WriteLine($"'{input[1]}' removed!");
 
                         // set step counter -1, safely avoiding overflowing the array of persons
@@ -91,14 +95,14 @@
                 else if (input[0] == commands[2])
                 {
                     // Start 
-                    var result = DispenseAB(persons);
+                    var result = DispenseAB(persons, removedPersons);
                     Console.WriteLine();
                     Console.WriteLine(result);
                 }
             }
         }
 
-        private static string DispenseAB(List<string> persons)
+        private static string DispenseAB(List<string> persons, List<string> removedPersons)
         {
             string[] simbs = new string[] { "-", "\\", "|", "/"};
             var stepLength = persons.Count;
@@ -121,8 +125,11 @@
                     {
                         var filename = file.Name.ToLower();
 
-                        var isMatch = persons.Any(pr => filename.Contains(pr.ToLower()));
-                        if (isMatch)
+                        var isMatchanyPerosn = persons.Any(pr => filename.Contains(pr.ToLower()));
+                        var isMatchAnyRemovedPerson = removedPersons.Any(pr => filename.Contains(pr.ToLower()));
+
+                        // If one of both matchs it will miss working with this file(continue with next one)
+                        if (isMatchanyPerosn || isMatchAnyRemovedPerson)
                         {
                             continue;
                         }
@@ -130,7 +137,8 @@
                         if (!filename.Contains("rechnung") 
                             && !filename.Contains("warten") 
                             && !filename.Contains("lieferschein") 
-                            && !filename.Contains("offen"))
+                            && !filename.Contains("offen")
+                            && !filename.Contains("gotov"))
                         {
                             
                             if (stepLength == 0)
@@ -142,15 +150,52 @@
                                 stepCounter = 0;
                             }
 
-                            var newName = file.Name.Insert(0, persons[stepCounter] + "_");
-                            File.Move(file.Name, newName);
-                            stepCounter++;
+                            try
+                            {
+                                var person = persons[stepCounter];
+                                var newName = file.Name.Insert(0, persons[stepCounter] + "_");
+                                File.Move(file.Name, newName);
+                                stepCounter++;
+                                AddLog(file.Name, person);
+                            }
+                            catch { }          
                         }
                     }
                 } 
             } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar);
 
             return "The ABDispenser is stopped!";
+        }
+
+        private static void AddLog(string abName, string person)
+        {
+
+            
+            try
+            {
+                StreamWriter log = null;
+                FileStream fileStream = null;
+                string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);      
+                
+                var logFilePath = assemblyFolder + "\\" + "AB_Dispernser_LogFile.txt";
+                FileInfo logFileInfo = new FileInfo(logFilePath);
+                DirectoryInfo logDirInfo = new DirectoryInfo(logFileInfo.DirectoryName);
+                //if (!logDirInfo.Exists) logDirInfo.Create();
+                if (!logFileInfo.Exists)
+                {
+                    fileStream = logFileInfo.Create();
+                }
+                else
+                {
+                    fileStream = new FileStream(logFilePath, FileMode.Append);
+                }
+                log = new StreamWriter(fileStream);
+                log.WriteLine("--------------------------------------------------------------------------------------");
+                log.WriteLine($"{DateTime.Now.ToString("dd-MM-yyyy")} | {person} | {abName}");
+                log.WriteLine("--------------------------------------------------------------------------------------");
+                log.Close();
+            }
+            catch { }   
         }
 
         private static void PrintInitials()
